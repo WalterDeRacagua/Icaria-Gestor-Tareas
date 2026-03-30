@@ -1,0 +1,128 @@
+<div class="task-list">
+  <div class="task-list__header">
+    <h1>Gestor de Tareas Icaria Technology</h1>
+    <p-button label="Nueva tarea" icon="pi pi-plus" (onClick)="openCreate()"></p-button>
+  </div>
+
+  <!-- Resumen de tareas -->
+  <app-summary [summary]="summary()"></app-summary>
+
+  <!-- Tabla donde vamos a visualizar las tareas -->
+  <p-table
+    [value]="filteredTasks()"
+    [sortField]="'endDate'"
+    [sortOrder]="1"
+    [paginator]="true"
+    [rows]="10"
+    [customSort]="true"
+    (sortFunction)="customSort($event)"
+    emptyMessage="No hay ninguna tarea disponible en Icaria."
+  >
+    <ng-template #header>
+      <tr>
+        <th pSortableColumn="title">Título <p-sortIcon field="title" /></th>
+        <th>Descripción</th>
+        <th pSortableColumn="priority">Prioridad <p-sortIcon field="priority" /></th>
+        <th pSortableColumn="status">Estado <p-sortIcon field="status" /></th>
+        <th pSortableColumn="endDate">Fecha límite <p-sortIcon field="endDate" /></th>
+        <th>Acciones</th>
+      </tr>
+      <tr>
+        <th>
+          <p-columnFilter
+            type="text"
+            field="title"
+            placeholder="Buscar..."
+            [showMenu]="false"
+            filterOn="input"
+          />
+        </th>
+        <th></th>
+        <th>
+          <p-columnFilter field="priority" matchMode="equals" [showMenu]="false">
+            <ng-template #filter let-value let-filter="filterCallback">
+              <p-select
+                [options]="priorityOptions"
+                optionLabel="label"
+                optionValue="value"
+                [ngModel]="value"
+                (onChange)="filter($event.value)"
+                placeholder="Prioridad"
+                [showClear]="true"
+                appendTo="body"
+              />
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
+            <ng-template #filter let-value let-filter="filterCallback">
+              <p-select
+                [options]="statusOptions"
+                optionLabel="label"
+                optionValue="value"
+                [ngModel]="value"
+                (onChange)="filter($event.value)"
+                placeholder="Estado"
+                [showClear]="true"
+                appendTo="body"
+              />
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th></th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-task>
+      <tr>
+        <td>
+          <a [routerLink]="['/tasks', task.id]">{{ task.title }}</a>
+        </td>
+        <td>{{ task.description }}</td>
+        <td>
+          <p-tag [value]="task.priority" [severity]="getPrioritySeverity(task.priority)" />
+        </td>
+        <td>
+          <p-tag [value]="task.status" [severity]="getStatusSeverity(task.status)" />
+        </td>
+        <td>{{ task.endDate | date: 'dd/MM/yyyy' }}</td>
+        <td>
+          <p-button
+            icon="pi pi-check"
+            [rounded]="true"
+            [text]="true"
+            severity="success"
+            [disabled]="task.status === 'done'"
+            (onClick)="markAsDone(task)"
+            ariaLabel="Marcar como completada"
+            title="Marcar como completada"
+          />
+          <p-button
+            icon="pi pi-pencil"
+            [rounded]="true"
+            [text]="true"
+            severity="info"
+            (onClick)="openEdit(task)"
+            ariaLabel="Editar tarea"
+            title="Editar tarea"
+          />
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="6">No hay ninguna tarea disponible en Icaria.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Dialogo con el formulario tanto de creación como de edición -->
+  <app-task-form
+    [visible]="dialogVisible()"
+    [task]="selectedTask()"
+    (saved)="onSaved($event)"
+    (cancelled)="onCancelled()"
+  >
+  </app-task-form>
+</div>

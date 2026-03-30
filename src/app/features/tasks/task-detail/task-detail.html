@@ -1,0 +1,28 @@
+<div class="task-detail">
+  @if (task()) {
+    <div class="task-detail__header">
+      <p-button icon="pi pi-arrow-left" label="Volver" [text]="true" routerLink="/tasks" />
+      <h1>{{ task()!.title }}</h1>
+    </div>
+
+    <div class="task-detail__card">
+      <div class="task-detail__row">
+        <span class="task-detail__label">Descripción</span>
+        <span class="task-detail__value"> {{ task()!.description || 'Sin descripción' }}</span>
+      </div>
+
+      <div class="task-detail__row">
+        <span class="task-detail__label">Prioridad</span>
+        <p-tag [value]="task()!.priority" [severity]="getPrioritySeverity(task()!.priority)" />
+      </div>
+      <div class="task-detail__row">
+        <span class="task-detail__label">Estado</span>
+        <p-tag [value]="task()!.status" [severity]="getStatusSeverity(task()!.status)" />
+      </div>
+      <div class="task-detail__row">
+        <span class="task-detail__label">Fecha límite</span>
+        <span class="task-detail__value"> {{ task()!.endDate | date: 'dd/MM/yyyy' }}</span>
+      </div>
+    </div>
+  }
+</div>

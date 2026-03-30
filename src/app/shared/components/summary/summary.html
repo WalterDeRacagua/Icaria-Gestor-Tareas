@@ -1,0 +1,21 @@
+<div class="summary">
+  <div class="summary__card">
+    <span class="summary__value">{{ summary().total }}</span>
+    <span class="summary__label">Total</span>
+  </div>
+
+  <div class="summary__card summary__card--pending">
+    <span class="summary__value">{{ summary().pending }}</span>
+    <span class="summary__label">Pendientes</span>
+  </div>
+
+  <div class="summary__card summary__card--completed">
+    <span class="summary__value">{{ summary().completed }}</span>
+    <span class="summary__label">Completadas</span>
+  </div>
+
+  <div class="summary__card summary__card--overdue">
+    <span class="summary__value">{{ summary().notDone }}</span>
+    <span class="summary__label">Vencidas</span>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+.task-list {
+  padding: 2rem;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--c-primary);
+    }
+  }
+
+  // Respuesta de claude. Como p-datatable es un componente de primeng que solo quiero modificar aquí entonces simplemente hago el cambio aquí. Se que no es lo más limpio
+  ::ng-deep {
+    .p-datatable-thead > tr > th {
+      color: var(--c-text);
+
+      .p-sortable-column-icon {
+        color: var(--c-text);
+      }
+
+      &:hover {
+        background-color: var(--c-primary-light) !important;
+        color: var(--c-text);
+      }
+
+      &.p-datatable-column-sorted {
+        background-color: var(--c-primary-light) !important;
+        color: var(--c-text);
+      }
+    }
+
+    .p-datatable-thead > tr:last-child > th {
+      &:hover {
+        //Color que usa primeNG para la tabla. Por eso no es una variable, no lo uso más en la aplicación
+        background-color: #18181b !important;
+      }
+    }
+  }
+}
