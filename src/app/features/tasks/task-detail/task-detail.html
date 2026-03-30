@@ -24,5 +24,10 @@
         <span class="task-detail__value"> {{ task()!.endDate | date: 'dd/MM/yyyy' }}</span>
       </div>
     </div>
+  } @else {
+    <div class="task-detail__not-found">
+      <p>Tarea no encontrada.</p>
+      <p-button label="Volver al listado" routerLink="/tasks" />
+    </div>
   }
 </div>

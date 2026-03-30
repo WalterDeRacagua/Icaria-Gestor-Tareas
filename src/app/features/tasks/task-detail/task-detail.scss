@@ -36,10 +36,6 @@
     min-width: 120px;
   }
 
-  &__value {
-    color: var(--c-dark);
-  }
-
   &__not-found {
     display: flex;
     flex-direction: column;
@@ -47,5 +43,9 @@
     gap: 1rem;
     margin-top: 4rem;
     color: var(--c-text);
+  }
+
+  &__value {
+    color: var(--c-dark);
   }
 }
